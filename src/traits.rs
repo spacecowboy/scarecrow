@@ -1,3 +1,4 @@
+//! The traits that make up neural network.
 use std::collections::LinkedList;
 
 /// A single layer in a neural network.
@@ -57,7 +58,6 @@ pub trait WeightedLayer: Layer {
     fn neuron_count(&self) -> usize;
     fn weights_mut(&mut self) -> Option<&mut Vec<f32>>;
     fn bias_mut(&mut self) -> Option<&mut Vec<f32>>;
-
     fn update(&mut self, weight_updates: &[f32], bias_updates: &[f32]) {
         if let Some(weights) = self.weights_mut() {
             for (w, dw) in weights.iter_mut().zip(weight_updates) {
@@ -89,7 +89,8 @@ pub trait LossFunction {
 
 /// A loss function which can be differentiated.
 pub trait DifferentiableLossFunction: LossFunction {
-    /// The derivative of a single loss with respect to the predictions.
+    /// The derivative of a single loss value with respect to the
+    /// prediction.
     fn deriv1(&self, f32, f32) -> f32;
 
     /// The derivative of the loss with respect to the predictions.

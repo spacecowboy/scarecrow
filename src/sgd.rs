@@ -1,3 +1,4 @@
+//! Implementation of stochastic gradient descent.
 use loss::*;
 use utils::*;
 use layers::{LayerUpdates, LayerOut};
@@ -5,10 +6,13 @@ use traits::{WeightedLayer, DifferentiableLossFunction, SupervisedTrainer};
 
 use std::collections::LinkedList;
 
+/// Stochastic gradient descent trainer.
 pub struct SGDTrainer {
     /// The learning rate
     pub rate: f32,
+    /// The number of iterations to train
     pub epochs: usize,
+    /// The loss function to use
     pub loss: Box<DifferentiableLossFunction>,
 }
 

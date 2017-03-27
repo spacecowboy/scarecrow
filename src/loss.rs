@@ -1,5 +1,8 @@
+//! Loss functions for training the networks.
 use traits::{LossFunction, DifferentiableLossFunction};
 
+/// The square error is defined as `e = (y - t)^2`, with derivative
+/// `de/dy = 2 * (y - t)`.
 pub struct SquaredError;
 
 impl LossFunction for SquaredError {

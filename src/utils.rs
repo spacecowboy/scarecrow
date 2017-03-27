@@ -1,7 +1,9 @@
-//use rand::Rng;
+//! Miscellaneous utility functions.
 use rand;
 use rand::distributions::{Normal, IndependentSample};
 
+/// Returns a vector with the given size where each element is a
+/// random gaussian number, with mean 0 and standard deviation 1.0.
 pub fn normal_vector(size: usize) -> Vec<f32> {
     let normal = Normal::new(0.0, 1.0);
     let mut rng = rand::thread_rng();

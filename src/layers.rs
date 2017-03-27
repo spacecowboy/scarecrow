@@ -1,3 +1,4 @@
+//! Implementation of different kinds of layers.
 use super::traits::{Layer, WeightedLayer};
 use super::utils::{dot, normal_vector};
 
