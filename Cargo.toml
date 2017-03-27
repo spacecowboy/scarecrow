@@ -2,6 +2,18 @@
 name = "scarecrow"
 version = "0.1.0"
 authors = ["Jonas Kalderstam <jonas@cowboyprogrammer.org>"]
+description = "A neural network library."
+documentation = "https://docs.rs/html2runes/0.1.0/scarecrow/"
+homepage = "https://github.com/spacecowboy/scarecrow"
+repository = "https://github.com/spacecowboy/scarecrow"
+readme = "README.md"
+keywords = ["neural", "network", "machine", "deep", "learning"]
+categories = ["algorithms", "science"]
+license = "MIT"
+
+[badges.travis-ci]
+repository = "spacecowboy/scarecrow"
+branch = "master"
 
 [dependencies]
 rand = "0.3"
