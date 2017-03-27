@@ -1,11 +1,14 @@
 //! `scarecrow` is a basic and simple implementation of an artificial
-//! neural network. It demonstrates the basics behind machine
-//! learning.
+//! neural network.
 //!
-//! ## Example - XOR
+//! ## Example
 //!
 //! This demonstrates the capability of the neural network to learn a
-//! non-linear function. First define your inputs and targets:
+//! non-linear function, namely [XOR](https://en.wikipedia.org/wiki/Exclusive_or).
+//! It trains on a truth-table using
+//! [gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).
+//!
+//! First we define inputs `X` and targets `T`:
 //!
 //! ```
 //! // Two binary input values, 4 possible combinations
@@ -23,7 +26,7 @@
 //! Then, we construct a neural network by adding a number of layers
 //! to a list:
 //!
-//! ```
+//! ```rust,ignore
 //! let mut layers: LinkedList<Box<WeightedLayer>> = LinkedList::new();
 //! // We start by a hidden "dense" layer of 6 neurons which should
 //! // accept 2 input values.
@@ -42,7 +45,7 @@
 //! random output from the network. This can be seen by feeding the
 //! inputs through the network:
 //!
-//! ```
+//! ```rust,ignore
 //! for (x, t) in inputs.chunks(2).zip(targets.chunks(1)) {
 //!     let mut o = x.to_vec();
 //!     for l in layers.iter() {
@@ -52,15 +55,47 @@
 //! }
 //! ```
 //!
-//! Example output:
+//! Example of network output `Y`:
 //!
+//! ```text
+//! X: [0, 0], Y: [0.4244223], T: [0]
+//! X: [0, 1], Y: [0.049231697], T: [1]
+//! X: [1, 0], Y: [0.12347225], T: [1]
+//! X: [1, 1], Y: [0.02869209], T: [0]
+//! ```
 //!
+//! To train the network, first create a suitable trainer and then
+//! call its train method:
 //!
+//! ```rust,ignore
+//! // A trainer which uses stochastic gradient descent. Run for
+//! // 1000 iterations with a learning rate of 0.1.
+//! let trainer = SGDTrainer::new(1000, 0.1);
+//! // Train the network on the given inputs and targets
+//! trainer.train(&mut layers, &inputs, &targets);
+//! ```
 //!
+//! Now calculate the output for the trained network:
 //!
+//! ```rust,ignore
+//! for (x, t) in inputs.chunks(2).zip(targets.chunks(1)) {
+//!     let mut o = x.to_vec();
+//!     for l in layers.iter() {
+//!         o = l.output(&o);
+//!     }
+//!     println!("X: {:?}, Y: {:?}, T: {:?}", x, o, t);
+//! }
+//! ```
 //!
-
-
+//! Final result, note that network output `Y` is quite close to
+//! targets `T`:
+//!
+//! ```text
+//! X: [0, 0], Y: [0.03515992], T: [0]
+//! X: [0, 1], Y: [0.96479124], T: [1]
+//! X: [1, 0], Y: [0.96392107], T: [1]
+//! X: [1, 1], Y: [0.03710678], T: [0]
+//! ```
 extern crate rand;
 
 pub mod traits;
